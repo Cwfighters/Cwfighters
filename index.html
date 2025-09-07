@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cwfighters</title>
   <style>
-    /* Keep any existing styles here */
+    /* Existing styles */
     body { font-family: Arial, sans-serif; padding: 20px; }
     h1, h2 { margin-bottom: 10px; }
     input { display: block; margin: 5px 0; padding: 5px; }
@@ -14,10 +14,10 @@
 </head>
 <body>
 
-  <!-- Existing header / content -->
+  <!-- Keep your existing header / content -->
   <header>
     <h1>Welcome to Cwfighters</h1>
-    <p>Your old content stays here.</p>
+    <p>Your original content stays here.</p>
   </header>
 
   <!-- Main content -->
@@ -32,8 +32,8 @@
     <input type="password" id="login-password" placeholder="Password">
     <button id="login-btn">Login</button>
 
-    <!-- Any other existing content remains here -->
-    <p>More of your original page content...</p>
+    <!-- More of your original page content -->
+    <p>Other content stays here...</p>
   </main>
 
   <footer>
@@ -43,6 +43,16 @@
   <!-- Firebase Auth script -->
   <script type="module">
     import { signUp, login } from './firebase.js';
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+    // Initialize auth listener to redirect already-logged-in users
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("User is already logged in:", user);
+        window.location.href = "home.html"; // change to your page
+      }
+    });
 
     // Signup button
     const signupBtn = document.getElementById('signup-btn');
