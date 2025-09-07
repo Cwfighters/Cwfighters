@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Portal</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cwfighters Auth</title>
 </head>
 <body>
+  <h1>Cwfighters Firebase Auth</h1>
 
-<header>
-  <div class="logo">GamePortal</div>
-  <nav>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li>
-        <a href="#">Matches ▼</a>
-        <ul class="dropdown">
-          <li><a href="#">Ladder</a></li>
-          <li><a href="#">Deathmatch</a></li>
-          <li><a href="#">Free-for-All</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">Leaderboards ▼</a>
-        <ul class="dropdown">
-          <li><a href="#">All Modes</a></li>
-          <li><a href="#">Rookies</a></li>
-          <li><a href="#">Fast Growers</a></li>
-        </ul>
-      </li>
-      <li><a href="account.html">Account</a></li>
-    </ul>
-  </nav>
-</header>
+  <h2>Sign Up</h2>
+  <input type="email" id="signup-email" placeholder="Email">
+  <input type="password" id="signup-password" placeholder="Password">
+  <button id="signup-btn">Sign Up</button>
 
-<main>
-  <div class="content">
-    <h1>Welcome to Game Portal</h1>
-    <p>Login or create an account to start playing!</p>
-    <button onclick="location.href='login.html'">Login</button>
-    <button onclick="location.href='signup.html'">Create Account</button>
-  </div>
-</main>
+  <h2>Login</h2>
+  <input type="email" id="login-email" placeholder="Email">
+  <input type="password" id="login-password" placeholder="Password">
+  <button id="login-btn">Login</button>
 
-<script src="script.js"></script>
+  <!-- Link to your Firebase module -->
+  <script type="module">
+    import { signUp, login } from './firebase.js';
+
+    // Sign up button click
+    document.getElementById('signup-btn').addEventListener('click', () => {
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      signUp(email, password);
+    });
+
+    // Login button click
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      login(email, password);
+    });
+  </script>
 </body>
 </html>
