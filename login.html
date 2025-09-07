@@ -1,1 +1,45 @@
-q
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function() {
+  const name = document.getElementById('name').value;
+  const password = document.getElementById('password').value;
+  const email = name.replace(/\s+/g,'') + "@cwfighters.com";
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth,email,password);
+    localStorage.setItem('uid', userCredential.user.uid);
+    window.location.href = 'account.html';
+  } catch(err){ alert(err.message); }
+}
+</script>
+</head>
+<body>
+<div class="content">
+  <h1>Login</h1>
+  <input type="text" id="name" placeholder="Name"><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+  <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+</div>
+</body>
+</html>
