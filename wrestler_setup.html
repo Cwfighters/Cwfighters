@@ -1,1 +1,72 @@
-q
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wrestler Setup</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveWrestler = async function() {
+  const uid = localStorage.getItem('uid');
+  if(!uid){ alert('No user'); return; }
+
+  const data = {
+    wrestlerName: document.getElementById('wrestlerName').value,
+    age: document.getElementById('age').value,
+    modelPic: document.getElementById('modelPic').value,
+    victoryPic: document.getElementById('victoryPic').value,
+    favMove: document.getElementById('favMove').value,
+    favDomination: document.getElementById('favDomination').value,
+    favPunishment: document.getElementById('favPunishment').value,
+    favMatchType: document.getElementById('favMatchType').value,
+    favOpponentType: document.getElementById('favOpponentType').value,
+    bio: document.getElementById('bio').value,
+    signatureTaunt: document.getElementById('signatureTaunt').value
+  };
+
+  if(!data.wrestlerName || !data.age || !data.modelPic || !data.victoryPic){
+    alert('Fill in required fields'); return;
+  }
+
+  try {
+    await setDoc(doc(db,'wrestlers',uid),data);
+    alert('Wrestler saved!');
+    window.location.href = 'account.html';
+  } catch(err){ alert(err.message); }
+}
+</script>
+</head>
+<body>
+<div class="content">
+  <h1>Wrestler Setup</h1>
+  <input type="text" id="wrestlerName" placeholder="Wrestler Name"><br>
+  <input type="number" id="age" placeholder="Age"><br>
+  <input type="text" id="modelPic" placeholder="Model Picture URL"><br>
+  <input type="text" id="victoryPic" placeholder="Victory Picture URL"><br>
+  <h3>Optional Favorites / Preferences</h3>
+  <input type="text" id="favMove" placeholder="Favorite Move"><br>
+  <input type="text" id="favDomination" placeholder="Favorite Domination"><br>
+  <input type="text" id="favPunishment" placeholder="Favorite Punishment"><br>
+  <input type="text" id="favMatchType" placeholder="Favorite Match Type"><br>
+  <input type="text" id="favOpponentType" placeholder="Favorite Opponent Type"><br>
+  <input type="text" id="bio" placeholder="Optional Bio / Description"><br>
+  <input type="text" id="signatureTaunt" placeholder="Optional Signature Taunt"><br><br>
+  <button onclick="saveWrestler()">Save Wrestler</button>
+</div>
+</body>
+</html>
