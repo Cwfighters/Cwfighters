@@ -3,38 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cwfighters Auth</title>
+  <title>Cwfighters</title>
+  <style>
+    /* Keep any existing styles here */
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1, h2 { margin-bottom: 10px; }
+    input { display: block; margin: 5px 0; padding: 5px; }
+    button { margin: 5px 0; padding: 5px 10px; }
+  </style>
 </head>
 <body>
-  <h1>Cwfighters Firebase Auth</h1>
 
-  <!-- Sign Up -->
-  <h2>Sign Up</h2>
-  <input type="email" id="signup-email" placeholder="Email">
-  <input type="password" id="signup-password" placeholder="Password">
-  <button id="signup-btn">Sign Up</button>
+  <!-- Existing header / content -->
+  <header>
+    <h1>Welcome to Cwfighters</h1>
+    <p>Your old content stays here.</p>
+  </header>
 
-  <!-- Login -->
-  <h2>Login</h2>
-  <input type="email" id="login-email" placeholder="Email">
-  <input type="password" id="login-password" placeholder="Password">
-  <button id="login-btn">Login</button>
+  <!-- Main content -->
+  <main>
+    <h2>Sign Up</h2>
+    <input type="email" id="signup-email" placeholder="Email">
+    <input type="password" id="signup-password" placeholder="Password">
+    <button id="signup-btn">Sign Up</button>
 
-  <!-- Script to connect buttons to Firebase -->
+    <h2>Login</h2>
+    <input type="email" id="login-email" placeholder="Email">
+    <input type="password" id="login-password" placeholder="Password">
+    <button id="login-btn">Login</button>
+
+    <!-- Any other existing content remains here -->
+    <p>More of your original page content...</p>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cwfighters</p>
+  </footer>
+
+  <!-- Firebase Auth script -->
   <script type="module">
     import { signUp, login } from './firebase.js';
 
-    document.getElementById('signup-btn').addEventListener('click', () => {
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      signUp(email, password);
-    });
+    // Signup button
+    const signupBtn = document.getElementById('signup-btn');
+    if (signupBtn) {
+      signupBtn.addEventListener('click', () => {
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        signUp(email, password);
+      });
+    }
 
-    document.getElementById('login-btn').addEventListener('click', () => {
-      const email = document.getElementById('login-email').value;
-      const password = document.getElementById('login-password').value;
-      login(email, password);
-    });
+    // Login button
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        login(email, password);
+      });
+    }
   </script>
+
 </body>
 </html>
