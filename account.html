@@ -1,1 +1,39 @@
-q
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.onload = async function() {
+  const uid = localStorage.getItem('uid');
+  if(!uid){ alert('No user'); return; }
+
+  try {
+    const docSnap = await getDoc(doc(db,'wrestlers',uid));
+    if(docSnap.exists()){
+      const data = docSnap.data();
+      let html = `<p><strong>Name:</strong> ${data.wrestlerName}</p><p><strong>Age:</strong> ${data.age}</p>`;
+      const optionalFields = ['favMove','favDomination','favPunishment','favMatchType','favOpponentType','bio','signatureTaunt'];
+      optionalFields.forEach(f=>{
+        if(data[f] && data[f].trim()!=='') html += `<p><strong>${f}:</strong> ${data[f]}</p>`;
+      });
+      document.getElementById
