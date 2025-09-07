@@ -1,1 +1,46 @@
-q
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.signup = async function() {
+  const name = document.getElementById('name').value;
+  const password = document.getElementById('password').value;
+  if(!name || !password){ alert("Fill in all fields"); return; }
+  const email = name.replace(/\s+/g,'') + "@cwfighters.com";
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth,email,password);
+    localStorage.setItem('uid', userCredential.user.uid);
+    window.location.href = 'wrestler_setup.html';
+  } catch(err){ alert(err.message); }
+}
+</script>
+</head>
+<body>
+<div class="content">
+  <h1>Create Account</h1>
+  <input type="text" id="name" placeholder="Name"><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button onclick="signup()">Sign Up</button>
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+</body>
+</html>
