@@ -8,28 +8,28 @@
 <body>
   <h1>Cwfighters Firebase Auth</h1>
 
+  <!-- Sign Up -->
   <h2>Sign Up</h2>
   <input type="email" id="signup-email" placeholder="Email">
   <input type="password" id="signup-password" placeholder="Password">
   <button id="signup-btn">Sign Up</button>
 
+  <!-- Login -->
   <h2>Login</h2>
   <input type="email" id="login-email" placeholder="Email">
   <input type="password" id="login-password" placeholder="Password">
   <button id="login-btn">Login</button>
 
-  <!-- Link to your Firebase module -->
+  <!-- Script to connect buttons to Firebase -->
   <script type="module">
     import { signUp, login } from './firebase.js';
 
-    // Sign up button click
     document.getElementById('signup-btn').addEventListener('click', () => {
       const email = document.getElementById('signup-email').value;
       const password = document.getElementById('signup-password').value;
       signUp(email, password);
     });
 
-    // Login button click
     document.getElementById('login-btn').addEventListener('click', () => {
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
