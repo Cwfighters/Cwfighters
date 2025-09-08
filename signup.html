@@ -33,7 +33,7 @@ window.signup = async function() {
     const uid = userCredential.user.uid;
     console.log("User created UID:", uid);
     localStorage.setItem('uid', uid);
-    window.location.href = 'wrestler_setup.html';
+    window.location.href = "wrestler_setup.html";
   } catch(err) {
     alert(err.message);
     console.error(err);
