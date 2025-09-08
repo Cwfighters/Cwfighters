@@ -33,7 +33,7 @@ window.login = async function() {
     const uid = userCredential.user.uid;
     console.log("User logged in UID:", uid);
     localStorage.setItem('uid', uid);
-    window.location.href = 'account.html';
+    window.location.href = "account.html";
   } catch(err) {
     alert(err.message);
     console.error(err);
