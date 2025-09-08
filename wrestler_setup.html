@@ -23,31 +23,34 @@ const db = getFirestore(app);
 
 window.saveWrestler = async function() {
   const uid = localStorage.getItem('uid');
-  if(!uid){ alert('No user'); return; }
+  if(!uid){ alert('No user UID found'); return; }
 
   const data = {
-    wrestlerName: document.getElementById('wrestlerName').value,
-    age: document.getElementById('age').value,
-    modelPic: document.getElementById('modelPic').value,
-    victoryPic: document.getElementById('victoryPic').value,
-    favMove: document.getElementById('favMove').value,
-    favDomination: document.getElementById('favDomination').value,
-    favPunishment: document.getElementById('favPunishment').value,
-    favMatchType: document.getElementById('favMatchType').value,
-    favOpponentType: document.getElementById('favOpponentType').value,
-    bio: document.getElementById('bio').value,
-    signatureTaunt: document.getElementById('signatureTaunt').value
+    wrestlerName: document.getElementById('wrestlerName').value.trim(),
+    age: document.getElementById('age').value.trim(),
+    modelPic: document.getElementById('modelPic').value.trim(),
+    victoryPic: document.getElementById('victoryPic').value.trim(),
+    favMove: document.getElementById('favMove').value.trim(),
+    favDomination: document.getElementById('favDomination').value.trim(),
+    favPunishment: document.getElementById('favPunishment').value.trim(),
+    favMatchType: document.getElementById('favMatchType').value.trim(),
+    favOpponentType: document.getElementById('favOpponentType').value.trim(),
+    bio: document.getElementById('bio').value.trim(),
+    signatureTaunt: document.getElementById('signatureTaunt').value.trim()
   };
 
   if(!data.wrestlerName || !data.age || !data.modelPic || !data.victoryPic){
-    alert('Fill in required fields'); return;
+    alert('Fill in all required fields'); return;
   }
 
   try {
     await setDoc(doc(db,'wrestlers',uid),data);
-    alert('Wrestler saved!');
+    console.log("Wrestler data saved:", data);
     window.location.href = 'account.html';
-  } catch(err){ alert(err.message); }
+  } catch(err){
+    alert(err.message);
+    console.error(err);
+  }
 }
 </script>
 </head>
