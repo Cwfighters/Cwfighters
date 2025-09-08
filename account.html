@@ -25,15 +25,48 @@ const db = getFirestore(app);
 
 window.onload = async function() {
   const uid = localStorage.getItem('uid');
-  if(!uid){ alert('No user'); return; }
+  if(!uid){ alert('No user UID'); return; }
 
   try {
     const docSnap = await getDoc(doc(db,'wrestlers',uid));
     if(docSnap.exists()){
       const data = docSnap.data();
-      let html = `<p><strong>Name:</strong> ${data.wrestlerName}</p><p><strong>Age:</strong> ${data.age}</p>`;
-      const optionalFields = ['favMove','favDomination','favPunishment','favMatchType','favOpponentType','bio','signatureTaunt'];
-      optionalFields.forEach(f=>{
+      let html = `<p><strong>Name:</strong> ${data.wrestlerName}</p>
+                  <p><strong>Age:</strong> ${data.age}</p>`;
+      ['favMove','favDomination','favPunishment','favMatchType','favOpponentType','bio','signatureTaunt'].forEach(f=>{
         if(data[f] && data[f].trim()!=='') html += `<p><strong>${f}:</strong> ${data[f]}</p>`;
       });
-      document.getElementById
+      document.getElementById('wrestlerInfo').innerHTML = html;
+      document.getElementById('modelPic').src = data.modelPic;
+      document.getElementById('victoryPic').src = data.victoryPic;
+    } else alert('No wrestler data found');
+  } catch(err){
+    alert(err.message);
+    console.error(err);
+  }
+}
+
+window.logout = async function() {
+  try {
+    await signOut(auth);
+    localStorage.removeItem('uid');
+    window.location.href = 'login.html';
+  } catch(err){
+    alert(err.message);
+    console.error(err);
+  }
+}
+</script>
+</head>
+<body>
+<div class="content">
+  <h1>Your Account</h1>
+  <div id="wrestlerInfo"></div>
+  <div id="pics">
+    <img id="modelPic" width="200" alt="Model Picture"><br>
+    <img id="victoryPic" width="200" alt="Victory Picture"><br>
+  </div>
+  <button onclick="logout()">Logout</button>
+</div>
+</body>
+</html>
