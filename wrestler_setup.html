@@ -46,7 +46,7 @@ window.saveWrestler = async function() {
   try {
     await setDoc(doc(db,'wrestlers',uid),data);
     console.log("Wrestler data saved:", data);
-    window.location.href = 'account.html';
+    window.location.href = "account.html";
   } catch(err){
     alert(err.message);
     console.error(err);
