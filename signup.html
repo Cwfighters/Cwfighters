@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up</title>
+<title>CW Fighters - Signup</title>
 <link rel="stylesheet" href="style.css">
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
@@ -21,33 +21,29 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.signup = async function() {
-  const name = document.getElementById('name').value.trim();
-  const password = document.getElementById('password').value.trim();
-  if(!name || !password){ alert("Fill in all fields"); return; }
-
-  const email = name.replace(/\s+/g,'') + "@cwfighters.com";
-
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-    const uid = userCredential.user.uid;
-    console.log("User created UID:", uid);
-    localStorage.setItem('uid', uid);
-    window.location.href = "wrestler_setup.html";
-  } catch(err) {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    localStorage.setItem('uid', userCredential.user.uid);
+    window.location.href = "./setup.html"; // fixed
+  } catch (err) {
     alert(err.message);
-    console.error(err);
   }
-}
+});
 </script>
 </head>
 <body>
-<div class="content">
-  <h1>Create Account</h1>
-  <input type="text" id="name" placeholder="Name"><br>
-  <input type="password" id="password" placeholder="Password"><br><br>
-  <button onclick="signup()">Sign Up</button>
-  <p>Already have an account? <a href="login.html">Login</a></p>
-</div>
+  <div class="content">
+    <h1>Sign Up</h1>
+    <form id="signupForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="./index.html">Login</a></p>
+  </div>
 </body>
 </html>
