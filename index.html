@@ -1,79 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cwfighters</title>
-  <style>
-    /* Existing styles */
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    h1, h2 { margin-bottom: 10px; }
-    input { display: block; margin: 5px 0; padding: 5px; }
-    button { margin: 5px 0; padding: 5px 10px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CW Fighters - Login</title>
+<link rel="stylesheet" href="style.css">
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAM6Hl4leWZ_mUf8kiev93LY2oGsxPy_fg",
+  authDomain: "cwfighters-a0313.firebaseapp.com",
+  projectId: "cwfighters-a0313",
+  storageBucket: "cwfighters-a0313.firebasestorage.app",
+  messagingSenderId: "255543788632",
+  appId: "1:255543788632:web:a26e4ab5906e04abf5762d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    localStorage.setItem('uid', userCredential.user.uid);
+    window.location.href = "./account.html"; // fixed
+  } catch (err) {
+    alert(err.message);
+  }
+});
+</script>
 </head>
 <body>
-
-  <!-- Keep your existing header / content -->
-  <header>
-    <h1>Welcome to Cwfighters</h1>
-    <p>Your original content stays here.</p>
-  </header>
-
-  <!-- Main content -->
-  <main>
-    <h2>Sign Up</h2>
-    <input type="email" id="signup-email" placeholder="Email">
-    <input type="password" id="signup-password" placeholder="Password">
-    <button id="signup-btn">Sign Up</button>
-
-    <h2>Login</h2>
-    <input type="email" id="login-email" placeholder="Email">
-    <input type="password" id="login-password" placeholder="Password">
-    <button id="login-btn">Login</button>
-
-    <!-- More of your original page content -->
-    <p>Other content stays here...</p>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Cwfighters</p>
-  </footer>
-
-  <!-- Firebase Auth script -->
-  <script type="module">
-    import { signUp, login } from './firebase.js';
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-    // Initialize auth listener to redirect already-logged-in users
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("User is already logged in:", user);
-        window.location.href = "home.html"; // change to your page
-      }
-    });
-
-    // Signup button
-    const signupBtn = document.getElementById('signup-btn');
-    if (signupBtn) {
-      signupBtn.addEventListener('click', () => {
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
-        signUp(email, password);
-      });
-    }
-
-    // Login button
-    const loginBtn = document.getElementById('login-btn');
-    if (loginBtn) {
-      loginBtn.addEventListener('click', () => {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
-        login(email, password);
-      });
-    }
-  </script>
-
+  <div class="content">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required><br>
+      <input type="password" id="password" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="./signup.html">Sign up</a></p>
+  </div>
 </body>
 </html>
