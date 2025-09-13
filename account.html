@@ -50,7 +50,8 @@ window.logout = async function() {
   try {
     await signOut(auth);
     localStorage.removeItem('uid');
-    window.location.href = "login.html";
+    // 🔥 Fixed: use relative path so it works on GitHub Pages
+    window.location.href = "./login.html";
   } catch(err){
     alert(err.message);
     console.error(err);
